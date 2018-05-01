@@ -1,0 +1,19 @@
+{
+  "name": "@capturoo/capturoo-cli",
+  "version": "0.1.0",
+  "description": "Capturoo command-line tool for developers",
+  "scripts": {
+    "test": "mocha"
+  },
+  "bin": {
+    "capturoo": "index.js"
+  },
+  "author": "Andy Fusniak",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "columnify": "^1.5.4",
+    "ini": "^1.3.5",
+    "yargs": "^11.0.0"
+  }
+}

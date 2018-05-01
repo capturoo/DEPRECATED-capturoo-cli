@@ -1,0 +1,5 @@
+{
+  "apiEndpoint": "https://api.capturoo.com",
+  "apiTimeout": 8000,
+  "debugApiEndpoint": "https://api-staging.capturoo.com"
+}
