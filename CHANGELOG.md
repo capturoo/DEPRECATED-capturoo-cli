@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.2 (1 May 2018)
++ Adds link to GitHub page
+
 ## 0.1.1 (1 May 2018)
 + Add README.md file
 
