@@ -1,7 +1,7 @@
 'use strict';
 const columnify = require('columnify');
 
-class Utils {
+class DisplayUtils {
   /**
    * Returns pretty text output for showing a list of projects
    *
@@ -17,6 +17,7 @@ class Utils {
       p => ({
         projectId: p.projectId,
         name: p.name,
+        publicApiKey: p.publicApiKey,
         created: p.created
       })
     );
@@ -24,7 +25,7 @@ class Utils {
     return columnify(data, {
       columnSplitter: ' | ',
       showHeaders: true,
-      columns: ['projectId', 'name', 'created'],
+      columns: ['projectId', 'name', 'publicApiKey', 'created'],
       config: {
         projectId: {
           headingTransform: projectId => ('Project ID')
@@ -32,12 +33,15 @@ class Utils {
         name: {
           headingTransform: heading => ('Project Name')
         },
+        publicApiKey: {
+          headingTransform: header => ('Public API Key')
+        },
         created: {
           headingTransform: heading => ('Created')
         }
       }
-    });vim
+    });
   }
 }
 
-module.exports = Utils;
+module.exports = DisplayUtils;

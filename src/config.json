@@ -1,5 +1,13 @@
 {
   "apiEndpoint": "https://api.capturoo.com",
-  "apiTimeout": 8000,
-  "debugApiEndpoint": "https://api-staging.capturoo.com"
+  "apiTimeout": 30000,
+  "debugApiEndpoint": "https://api-staging.capturoo.com",
+  "firebase": {
+    "apiKey": "AIzaSyDyKWgLvd9zB5B6PYQrWaZu_5UVMjOMCbo",
+    "authDomain": "leads-dashboard-staging.firebaseapp.com",
+    "databasURL": "https://leads-dashboard-staging.firebaseio.com",
+    "projectId": "leads-dashboard-staging",
+    "storageBucket": "",
+    "messagingSenderId": "1067252526152"
+  }
 }
