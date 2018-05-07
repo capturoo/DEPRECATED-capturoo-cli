@@ -39,7 +39,7 @@ LeadsCommand.prototype.run = function(options) {
         } else if (format === 'json') {
           str = JSON.stringify(result.data);
         } else if (format === 'csv') {
-          str =
+          //str =
         }
 
         if (output) {
