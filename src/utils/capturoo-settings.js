@@ -40,8 +40,25 @@ const writeCurrentProjectSync = (projectId) => {
   fs.writeFileSync(currentProjectFile, `${projectId}\n`);
 };
 
+/**
+ * Get the current project ID string
+ * @returns {string|undefined} returns undefined if not found
+ */
+const readCurrentProjectSync = () => {
+  const projectDir = path.resolve(getHomeDir(), '.capturoo');
+  const currentProjectFile = path.resolve(projectDir, 'CURRENT_PROJECT');
+  if (fs.existsSync(currentProjectFile)) {
+    let projectId = fs.readFileSync(currentProjectFile, {
+      encoding: 'utf8',
+      flag: 'r'
+    });
+    return projectId.trim();
+  }
+};
+
 module.exports = {
   readApiKey,
+  readCurrentProjectSync,
   writeApiKey,
   writeCurrentProjectSync
 };

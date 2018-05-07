@@ -33,9 +33,8 @@ yargs
       process.exit();
     }
     let service = new Service(apiKey);
-
-    let selectProjectCommand = new capturooCommands.SelectProjectCommand(service);
-    selectProjectCommand.run()
+    new capturooCommands.SelectProjectCommand(service)
+      .run()
       .then(projectId => {
         console.log(`Project ${projectId} selected`);
       })
@@ -83,34 +82,42 @@ yargs
         }
       });
   })
-  .command('leads [<leadid>]', 'List all leads or a specific lead for a given project', (yargs) => {
+  .command('leads [-p <projectId>]', 'List all leads or a specific lead for a given project', (yargs) => {
     yargs
     .options('p', {
       alias: 'project',
-      demandOption: true,
+      demandOption: false,
       type: 'string'
     })
-    .positional('leadid', {
-      describe: 'Lead ID to describe',
+    .options('o', {
+      alias: 'output',
+      demandOption: false,
       type: 'string'
-    });
+    })
+    .options('format', {
+      demandOption: false,
+      default: 'json',
+      type: 'string'
+    })
+    .choices('format', [
+      'json', 'yaml', 'csv'
+    ])
   }, function(argv) {
     let apiKey = readApiKey();
     if (!apiKey) {
       console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
       process.exit();
     }
-
     let service = new Service(apiKey);
-    service.getLeads(argv.p)
-      .then(result => {
-        console.log(result.data);
+    new capturooCommands.LeadsCommand(service)
+      .run({
+        projectId: argv.p,
+        format: argv.format,
+        output: argv.o
+      })
+      .then(() => {
       })
       .catch(err => {
-        let data = err.response.data;
-        if (data.hasOwnProperty('status') && data.status === 401) {
-          console.log('There was a problem authenticating you. Please check your private key in your ~/.capturoo file.');
-        }
       });
   })
   .help()
