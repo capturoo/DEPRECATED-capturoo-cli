@@ -1,7 +1,7 @@
 'use strict';
 const columnify = require('columnify');
 
-class Utils {
+class DisplayUtils {
   /**
    * Returns pretty text output for showing a list of projects
    *
@@ -44,4 +44,4 @@ class Utils {
   }
 }
 
-module.exports = Utils;
+module.exports = DisplayUtils;
