@@ -28,7 +28,7 @@ yargs
       console.error(err);
     }
   })
-  .command('project:delete <pid>', 'Delete a project', (yargs) => {
+  .command('projects:delete <pid>', 'Delete a project', (yargs) => {
     yargs
       .positional('pid', {
         describe: 'Project ID to delete',
@@ -52,7 +52,7 @@ yargs
     console.log('project:delete');
     console.log(argv);
   })
-  .command('select', 'Select a project', (yargs) => {
+  .command('projects:select', 'Select a project', (yargs) => {
   }, function (argv) {
     let apiKey = readApiKey();
     bailIfNoApiKey(apiKey);
@@ -87,7 +87,7 @@ yargs
         process.exit();
       });
   })
-  .command('projects', 'List all projects', (yargs) => {
+  .command('projects:list', 'List all projects', (yargs) => {
   }, function(argv) {
     let apiKey = readApiKey();
     bailIfNoApiKey(apiKey);
@@ -103,7 +103,7 @@ yargs
         }
       });
   })
-  .command('leads [-p <projectId>]', 'List all leads or a specific lead for a given project', (yargs) => {
+  .command('leads:list [-p <projectId>]', 'List all leads or a specific lead for a given project', (yargs) => {
     yargs
     .options('p', {
       alias: 'project',

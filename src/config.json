@@ -1,13 +1,26 @@
 {
-  "apiEndpoint": "https://api.capturoo.com",
-  "apiTimeout": 30000,
-  "debugApiEndpoint": "https://api-staging.capturoo.com",
-  "firebase": {
-    "apiKey": "AIzaSyDyKWgLvd9zB5B6PYQrWaZu_5UVMjOMCbo",
-    "authDomain": "leads-dashboard-staging.firebaseapp.com",
-    "databasURL": "https://leads-dashboard-staging.firebaseio.com",
-    "projectId": "leads-dashboard-staging",
-    "storageBucket": "",
-    "messagingSenderId": "1067252526152"
+  "production": {
+    "apiEndpoint": "https://api.capturoo.com",
+    "apiTimeout": 30000,
+    "firebaseConfig": {
+      "apiKey": "AIzaSyASjhmcCf0F2a_uisydxI4XBmnkEkBi9Q8",
+      "authDomain": "capturoo-api-production.firebaseapp.com",
+      "databaseURL": "https://capturoo-api-production.firebaseio.com",
+      "projectId": "capturoo-api-production",
+      "storageBucket": "capturoo-api-production.appspot.com",
+      "messagingSenderId": "889518461410"
+    }
+  },
+  "staging": {
+    "apiEndpoint": "https://api-staging.capturoo.com",
+    "apiTimeout": 60000,
+    "firebaseConfig": {
+      "apiKey": "AIzaSyAiXnr28rLkuoxbx6G8tt4fRdTis7b-QT4",
+      "authDomain": "capturoo-api-staging.firebaseapp.com",
+      "databaseURL": "https://capturoo-api-staging.firebaseio.com",
+      "projectId": "capturoo-api-staging",
+      "storageBucket": "capturoo-api-staging.appspot.com",
+      "messagingSenderId": "621971739024"
+    }
   }
 }

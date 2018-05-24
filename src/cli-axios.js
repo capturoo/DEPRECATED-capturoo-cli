@@ -1,9 +1,10 @@
 'use strict';
 const axios = require('axios');
 const config = require('./config');
+const contextConfig = (process.env.CAPTUROO_CLI_DEBUG_MODE) ? config.staging : config.production;
 const axiosConfig = {
-  baseURL: (process.env.CAPTUROO_CLI_DEBUG_MODE) ? config.debugApiEndpoint : config.apiEndpoint,
-  timeout: config.apiTimeout,
+  baseURL: contextConfig.apiEndpoint,
+  timeout: contextConfig.apiTimeout,
   headers: {
     'Content-Type': 'application/json'
   }

@@ -1,12 +1,14 @@
 'use strict';
-const firebase = require('firebase');
-require('firebase/firestore');
+const firebase = require('@firebase/app').default;
+require('@firebase/auth');
+require('@firebase/firestore');
 const inquirer = require('inquirer');
 const { writeApiKey } = require('./capturoo-settings');
 const config = require('../config');
+const contextConfig = (process.env.CAPTUROO_CLI_DEBUG_MODE) ? config.staging : config.production;
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(config.firebase);
+  firebase.initializeApp(contextConfig.firebaseConfig);
 }
 
 firebase.firestore().settings({
@@ -48,7 +50,7 @@ const login = () => {
 
 const firebaseSignin = (email, password) => {
   return new Promise(function(resolve, reject) {
-    firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+    firebase.auth().signInWithEmailAndPassword(email, password)
       .then(userCredential => {
         return userCredential.user.uid;
       })
