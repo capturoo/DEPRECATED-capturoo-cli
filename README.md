@@ -14,8 +14,7 @@ This will provide you with the globally accessible `capturoo` command.
 To use the Capturoo CLI, you first need to [sign up for a Capturoo account](https://www.capturoo.com).
 
 ## Commands
-**The command `capturoo --help` lists the available commands and `capturoo <command> --help` shows more details for an individual command.**
+`capturoo --help` lists the available commands and `capturoo <command> --help` shows more details for an individual command.
 
 ## License
-
-MIT 
+MIT

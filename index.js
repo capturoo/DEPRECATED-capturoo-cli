@@ -7,16 +7,19 @@ const DisplayUtils = require('./src/utils/display');
 const { login } = require('./src/utils/login');
 const capturooCommands = require('./src/commands');
 
+function bailIfNoApiKey(apiKey) {
+  if (!apiKey) {
+    console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
+    process.exit();
+  }
+}
+
 yargs
   .usage('$0 <cmd> [args]')
   .command('account', 'Show account details', (yargs) => {
   }, async function(argv) {
     let apiKey = readApiKey();
-    if (!apiKey) {
-      console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
-      process.exit();
-    }
-
+    bailIfNoApiKey(apiKey);
     let service = new Service(apiKey);
     try {
       let account = await service.getAccount();
@@ -25,13 +28,34 @@ yargs
       console.error(err);
     }
   })
+  .command('project:delete <pid>', 'Delete a project', (yargs) => {
+    yargs
+      .positional('pid', {
+        describe: 'Project ID to delete',
+      });
+  }, async function(argv) {
+    let apiKey = readApiKey();
+    bailIfNoApiKey(apiKey);
+
+    let service = new Service(apiKey);
+    try {
+      let { data } = await service.getProjects();
+      let projects = data.map(p => ( p.projectId));
+      console.log(projects);
+    } catch (err) {
+      console.error(err);
+      let data = err.response.data;
+      if (data.hasOwnProperty('status') && data.status === 401) {
+        console.log('There was a problem authenticating you.');
+      }
+    }
+    console.log('project:delete');
+    console.log(argv);
+  })
   .command('select', 'Select a project', (yargs) => {
   }, function (argv) {
     let apiKey = readApiKey();
-    if (!apiKey) {
-      console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
-      process.exit();
-    }
+    bailIfNoApiKey(apiKey);
     let service = new Service(apiKey);
     new capturooCommands.SelectProjectCommand(service)
       .run()
@@ -66,10 +90,7 @@ yargs
   .command('projects', 'List all projects', (yargs) => {
   }, function(argv) {
     let apiKey = readApiKey();
-    if (!apiKey) {
-      console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
-      process.exit();
-    }
+    bailIfNoApiKey(apiKey);
     let service = new Service(apiKey);
     service.getProjects()
       .then(result => {
@@ -78,7 +99,7 @@ yargs
       .catch(err => {
         let data = err.response.data;
         if (data.hasOwnProperty('status') && data.status === 401) {
-          console.log('There was a problem authenticating you. Please check your private key in your ~/.capturoo file.');
+          console.log('There was a problem authenticating you. Please check your private key in your ~/.capturoorc file.');
         }
       });
   })
@@ -104,10 +125,7 @@ yargs
     ])
   }, function(argv) {
     let apiKey = readApiKey();
-    if (!apiKey) {
-      console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
-      process.exit();
-    }
+    bailIfNoApiKey(apiKey);
     let service = new Service(apiKey);
     new capturooCommands.LeadsCommand(service)
       .run({
@@ -121,4 +139,6 @@ yargs
       });
   })
   .help()
+  .showHelpOnFail(true)
+  .demandCommand(1, '')
   .argv
