@@ -1,6 +1,6 @@
 {
   "name": "@capturoo/capturoo-cli",
-  "version": "0.2.0-dev",
+  "version": "0.2.0-alpha",
   "description": "Capturoo command-line tool for developers",
   "scripts": {
     "test": "mocha"

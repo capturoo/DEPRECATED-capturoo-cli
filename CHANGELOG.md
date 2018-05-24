@@ -1,4 +1,6 @@
 # CHANGELOG
+## 0.2.0-alpha (24 May 2018)
++ [capturoo command without sub-command should show help screen #2](https://github.com/capturoo/capturoo-cli/issues/2)
 
 ## 0.1.2 (1 May 2018)
 + Adds link to GitHub page
