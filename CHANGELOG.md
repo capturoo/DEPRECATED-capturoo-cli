@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.3.0-alpha (25 May 2018)
+## 0.4.0-alpha (25 May 2018)
 + capturoo projects:create prompts to create a new project
 
 ## 0.2.0-alpha (24 May 2018)
