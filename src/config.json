@@ -12,7 +12,7 @@
     }
   },
   "staging": {
-    "apiEndpoint": "http://localhost:3000",
+    "apiEndpoint": "http://api-staging.capturoo.com",
     "apiTimeout": 60000,
     "firebaseConfig": {
       "apiKey": "AIzaSyAiXnr28rLkuoxbx6G8tt4fRdTis7b-QT4",

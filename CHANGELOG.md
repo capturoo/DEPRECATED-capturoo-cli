@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.4.1-alpha (25 May 2018)
++ Redeploy to fix broken npm publish release
+
 ## 0.4.0-alpha (25 May 2018)
 + capturoo projects:create prompts to create a new project
 
