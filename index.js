@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-'use strict';
 const yargs = require('yargs');
 const { readApiKey, writeCurrentProjectSync } = require('./src/utils/capturoo-settings');
 const Service = require('./src/service');
 const DisplayUtils = require('./src/utils/display');
 const { login } = require('./src/utils/login');
 const capturooCommands = require('./src/commands');
+
+if (process.env.CAPTUROO_CLI_DEBUG_MODE) {
+  console.log('RUNNING IN STAGING MODE');
+}
 
 function bailIfNoApiKey(apiKey) {
   if (!apiKey) {
@@ -26,6 +29,24 @@ yargs
       console.log(account)
     } catch (err) {
       console.error(err);
+    }
+  })
+  .command('projects:create', 'Create a new project', (yargs) => {
+  }, async (argv) => {
+    let apiKey = readApiKey();
+    bailIfNoApiKey(apiKey);
+
+    let service = new Service(apiKey);
+    try {
+      let createProjectCommand = new capturooCommands.CreateProjectCommand(service);
+      await createProjectCommand.run();
+    } catch (err) {
+      if (err.response && err.response.data) {
+        let data = err.response.data;
+        console.log(`Error "${data.message}"`);
+      } else {
+        console.log(err);
+      }
     }
   })
   .command('projects:delete <pid>', 'Delete a project', (yargs) => {
@@ -50,7 +71,6 @@ yargs
       }
     }
     console.log('project:delete');
-    console.log(argv);
   })
   .command('projects:select', 'Select a project', (yargs) => {
   }, function (argv) {
@@ -137,6 +157,29 @@ yargs
       })
       .catch(err => {
       });
+  })
+  .command('leads:last [-p <projectId>]', '', (yargs) => {
+    yargs
+    .options('p', {
+      alias: 'project',
+      demandOption: false,
+      type: 'string'
+    })
+    .options('format', {
+      demandOption: false,
+      default: 'json',
+      type: 'string'
+    })
+    .choices('format', [
+      'json', 'yaml', 'csv'
+    ]);
+  }, (argv) => {
+    let apiKey = readApiKey();
+    bailIfNoApiKey(apiKey);
+    let service = new Service(apiKey);
+
+
+
   })
   .help()
   .showHelpOnFail(true)

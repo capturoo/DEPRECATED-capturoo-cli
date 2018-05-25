@@ -16,5 +16,16 @@ To use the Capturoo CLI, you first need to [sign up for a Capturoo account](http
 ## Commands
 `capturoo --help` lists the available commands and `capturoo <command> --help` shows more details for an individual command.
 
+### Create a new project
+Example usage.
+
+```
+capturoo projects:create
+? Name of your project:  Promotion Campaign Site
+? Alocate a project ID (lowercase including hyphen) promotion-xyz
+```
+
+After your project has been created, retrieve your public key using `capturoo projects:list`.
+
 ## License
 MIT
