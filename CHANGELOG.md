@@ -1,7 +1,11 @@
 # CHANGELOG
 
+## 0.4.2-alpha (25 May 2018)
++ Fix broken endpoint to use SSL
+
 ## 0.4.1-alpha (25 May 2018)
 + Redeploy to fix broken npm publish release
++ This release is broken for staging server
 
 ## 0.4.0-alpha (25 May 2018)
 + capturoo projects:create prompts to create a new project
