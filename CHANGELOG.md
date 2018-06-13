@@ -1,4 +1,11 @@
 # CHANGELOG
+## 0.5.0 (13 June 2018)
++ Uses server manager pattern to load commands with factories
++ Revised syntax to use ES6 Classes
++ Color terminal output
++ Emojis to liven up display output
++ Removes columify dependency in favour of custom code
++ Ora spinner
 
 ## 0.4.2-alpha (25 May 2018)
 + Fix broken endpoint to use SSL
