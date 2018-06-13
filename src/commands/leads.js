@@ -1,5 +1,4 @@
 'use strict';
-const { readCurrentProjectSync } = require('../utils/capturoo-settings');
 const { stringToFile, leadsToYamlString } = require('../utils/leads-processing');
 const Json2csvParser = require('json2csv').Parser;
 
