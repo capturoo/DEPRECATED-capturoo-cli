@@ -2,11 +2,16 @@
 const yargs = require('yargs');
 const Display = require('./src/utils/display');
 const commands = require('./src/commands');
+const path = require('path');
 var config = require('./config');
 
 if (process.env.CAPTUROO_CLI_DEBUG_MODE) {
+  let homeDir = process.env[(process.platform == 'win32')
+    ? 'USERPROFILE' : 'HOME'];
+  let stagingConfigFile = path.resolve(homeDir, '.config-staging.json');
+
   console.log(Display.stagingMode());
-  config = require('./config-staging.json');
+  config = require(stagingConfigFile);
 }
 
 function bailIfNoApiKey(apiKey) {

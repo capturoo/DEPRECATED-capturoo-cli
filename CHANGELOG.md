@@ -1,4 +1,7 @@
 # CHANGELOG
+## 0.6.4 (14 June 2018)
++ For staging mode use ~/.config-staging.json file
+
 ## 0.6.3 (14 June 2018)
 + Uses store 4.1.2 which no longer uses babel
 
