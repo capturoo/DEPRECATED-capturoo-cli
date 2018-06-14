@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 const capturoo = require('@capturoo/app');
-require('@capturoo/manage');
+require('@capturoo/store');
 const KeyManager = require('../utils/key-manager');
 
 class ProjectCommand {

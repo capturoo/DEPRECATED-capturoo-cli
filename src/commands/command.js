@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 const capturoo = require('@capturoo/app');
-require('@capturoo/manage');
+require('@capturoo/store');
 const ConfigManager = require('../utils/config-manager');
 const Display = require('../utils/display');
 const Ora = require('ora');
@@ -43,9 +43,9 @@ class Command {
       ...fileConfig,
       activeProject,
       spinner,
-      manage: capturoo.manage()
+      store: capturoo.store()
     });
-    capturoo.manage().setPrivateApiKey(fileConfig.privateApiKey);
+    capturoo.store().setPrivateApiKey(fileConfig.privateApiKey);
   }
 }
 

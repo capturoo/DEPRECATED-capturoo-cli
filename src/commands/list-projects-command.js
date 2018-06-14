@@ -26,7 +26,7 @@ class ListProjectsCommand extends Command {
     try {
       this.spinner.start();
 
-      let querySnapshot = await this.manage.accounts().doc(this.aid).projects().get();
+      let querySnapshot = await this.store.accounts().doc(this.aid).projects().get();
       let projects = [];
       for (const queryDocSnap of querySnapshot) {
         let data = queryDocSnap.data();

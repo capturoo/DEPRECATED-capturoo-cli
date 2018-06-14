@@ -1,4 +1,12 @@
 # CHANGELOG
+## 0.6.2 (14 June 2018)
++ Uses store 4.1.1 which includes full library
+
+## 0.6.0 (14 June 2018)
++ manage component renamed to store
++ uses 1.0.0 releases of app, auth and store 4.1.0
++ Fixes bug when running last-lead with 0 results
+
 ## 0.5.0 (13 June 2018)
 + Uses server manager pattern to load commands with factories
 + Revised syntax to use ES6 Classes

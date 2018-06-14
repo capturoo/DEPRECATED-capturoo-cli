@@ -32,15 +32,21 @@ class LastLeadCommand extends Command {
 
       let proj = `${chalk.white.bold(`${chalk.white.bold(this.activeProject)}`)}`;
       this.spinner.start(`${emoji.get('chipmunk')}  Getting last lead for ${proj}.`);
-      let projectDocRef = this.manage
+      let projectDocRef = this.store
         .accounts().doc(this.aid)
         .projects().doc(this.activeProject);
       let query = projectDocRef.leads()
         .orderBy('system_created', 'desc').limit(1);
+      //console.log(query);
       let querySnapshot = await query.get();
-      let leadQuerySnap = querySnapshot.docs()[0];
       this.spinner.stop();
-      console.log(leadQuerySnap.data());
+
+      if (querySnapshot.size ===0 ) {
+        console.log(`This project currently has no leads`);
+      } else {
+        let leadQuerySnap = querySnapshot.docs()[0];
+        console.log(leadQuerySnap.data());
+      }
     } catch (err) {
       this.spinner.fail(err.message);
       throw err;

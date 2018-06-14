@@ -42,7 +42,7 @@ class SelectProjectCommand extends Command {
     try {
       // Get a list of project names
       this.spinner.start();
-      let querySnapshot = await this.manage
+      let querySnapshot = await this.store
         .accounts().doc(this.aid)
         .projects().get();
 

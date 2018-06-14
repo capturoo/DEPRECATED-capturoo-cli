@@ -47,7 +47,7 @@ class AddProjectCommand extends Command {
       let answer = await this.promptProjectDetails();
 
       this.spinner.start();
-      let projectDocRef = await this.manage.accounts().doc(this.aid)
+      let projectDocRef = await this.store.accounts().doc(this.aid)
         .projects().add({
           pid: answer.pid,
           projectName: answer.projectName

@@ -24,7 +24,7 @@ class AccountCommand extends Command {
   async run() {
     try {
       this.spinner.start();
-      let accountDocSnap = await this.manage.accounts().doc(this.aid).get();
+      let accountDocSnap = await this.store.accounts().doc(this.aid).get();
       if (!accountDocSnap.exists) {
         let e = Error('Failed to get project');
         e.code = 'account-command/failed-to-get-project';

@@ -16,7 +16,7 @@
 const inquirer = require('inquirer');
 const capturoo = require('@capturoo/app');
 require('@capturoo/auth');
-require('@capturoo/manage');
+require('@capturoo/store');
 const ConfigManager = require('../utils/config-manager');
 const emoji = require('node-emoji');
 const Ora = require('ora');
@@ -26,7 +26,7 @@ class SetupCommand {
     capturoo.initApp(config);
     Object.assign(this, {
       auth: capturoo.auth(),
-      manage: capturoo.manage(),
+      store: capturoo.store(),
       spinner: new Ora({
         color: 'gray',
         spinner: 'dots'
@@ -83,9 +83,9 @@ class SetupCommand {
       let userCredential = await this.auth.signInWithEmailAndPassword(
         username, password);
 
-      this.manage.setToken(this.auth.getToken());
+      this.store.setToken(this.auth.getToken());
 
-      let accountDocSnap = await this.manage.accounts().doc(userCredential.user.uid).get();
+      let accountDocSnap = await this.store.accounts().doc(userCredential.user.uid).get();
       if (!accountDocSnap.exists) {
         let e = Error(`Failed to locate the account (${userCredential.user.uid})`);
         e.code = 'auth/failed-to-locate-account';
