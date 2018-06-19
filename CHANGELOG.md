@@ -1,4 +1,9 @@
 # CHANGELOG
+## 0.7.0 (19 June 2018)
++ Leads query export CSV and JSON formats stdout and file
++ Bunyan logging to .capturoo directory
++ scripts/link-deps for local development environment configuration
+
 ## 0.6.4 (14 June 2018)
 + For staging mode use ~/.config-staging.json file
 

@@ -27,7 +27,7 @@ class LastLeadCommand extends Command {
       if (!this.activeProject) {
         let cmd = `${chalk.cyan.bold('capturoo projects-select')}`;
         console.log(`You have no active project. Use ${cmd} to select one.`)
-        process.exit();
+        return undefined;
       }
 
       let proj = `${chalk.white.bold(`${chalk.white.bold(this.activeProject)}`)}`;
@@ -41,7 +41,7 @@ class LastLeadCommand extends Command {
       let querySnapshot = await query.get();
       this.spinner.stop();
 
-      if (querySnapshot.size ===0 ) {
+      if (querySnapshot.size === 0) {
         console.log(`This project currently has no leads`);
       } else {
         let leadQuerySnap = querySnapshot.docs()[0];

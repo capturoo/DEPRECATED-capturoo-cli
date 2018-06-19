@@ -74,12 +74,17 @@ class ConfigManager {
     }
   }
 
-  writeCurrentProjectSync(pid) {
+  ensureCapturooDirExistsSync() {
     const projectDir = path.resolve(this.homeDir, ConfigManager.CAPTUROO_DIR);
-    const currentProjectFile = path.resolve(projectDir, 'CURRENT_PROJECT');
     if (!fs.existsSync(projectDir)) {
       fs.mkdirSync(projectDir, 0o775);
     }
+    return projectDir;
+  }
+
+  writeCurrentProjectSync(pid) {
+    const projectDir = this.ensureCapturooDirExistsSync();
+    const currentProjectFile = path.resolve(projectDir, 'CURRENT_PROJECT');
     fs.writeFileSync(currentProjectFile, `${pid}\n`);
   };
 

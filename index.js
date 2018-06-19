@@ -2,8 +2,23 @@
 const yargs = require('yargs');
 const Display = require('./src/utils/display');
 const commands = require('./src/commands');
+const bunyan = require('bunyan');
 const path = require('path');
-var config = require('./config');
+const ConfigManager = require('./src/utils/config-manager');
+const configManager = new ConfigManager();
+
+// configure logging and put onboard the config for global use
+const capturooDir = configManager.ensureCapturooDirExistsSync();
+const log = bunyan.createLogger({
+  name: 'myapp',
+  //serializers: bunyan.stdSerializers,
+  streams: [
+    {
+      level: 'debug',
+      path: path.resolve(capturooDir, 'capturoo-cli.log')
+    }
+  ]
+});
 
 if (process.env.CAPTUROO_CLI_DEBUG_MODE) {
   let homeDir = process.env[(process.platform == 'win32')
@@ -11,12 +26,19 @@ if (process.env.CAPTUROO_CLI_DEBUG_MODE) {
   let stagingConfigFile = path.resolve(homeDir, '.config-staging.json');
 
   console.log(Display.stagingMode());
-  config = require(stagingConfigFile);
+  var config = require(stagingConfigFile);
+  log.debug('Running in staging mode');
+} else {
+  var config = require('./config');
 }
+config.log = log;
+
+log.info('Capturoo CLI tool started');
 
 function bailIfNoApiKey(apiKey) {
   if (!apiKey) {
-    console.log(`Run:\n\ncapturoo setup\n\na single time, or set the environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
+    console.log(`Run:\n\ncapturoo setup\n\na single time, or set the' +
+      ' environement variable CAPTUROO_PRIVATE_API_KEY to you private key.`);
     process.exit();
   }
 }
@@ -26,19 +48,20 @@ yargs
   .command('account', 'Show account details', (yargs) => {
   }, async function(argv) {
     try {
+      log.info('AccountCommand started');
       const command = commands.accountCommand(config);
       let account = await command.run();
     } catch (err) {
       console.error(err);
-      process.exit();
     }
   })
-  .command('setup', 'Setup the command-line tool with your Capturoo account', (yargs) => {
+  .command('setup', 'Setup the command-line tool with your Capturoo' +
+    ' account', (yargs) => {
   }, async (argv) => {
-    const ConfigManager = require('./src/utils/config-manager');
-    const configManager = new ConfigManager();
     if (configManager.readConfigSync())  {
-      console.error('capturoo has already setup with your private key. If you wish to use a different account edit your ~/.capturoorc manually with your editor.')
+      console.error('capturoo has already setup with your private key. ' +
+      ' If you wish to use a different account edit your ~/.capturoorc' +
+      ' manually with your editor.');
       process.exit();
     }
 
@@ -47,7 +70,6 @@ yargs
       let account = await command.run();
     } catch (err) {
       console.error(err);
-      process.exit();
     }
   })
   .command('projects-add', 'Add a new project', (yargs) => {
@@ -55,10 +77,8 @@ yargs
     try {
       const command = commands.addProjectCommand(config);
       await command.run();
-      process.exit();
     } catch (err) {
       console.error(err);
-      process.exit();
     }
   })
   .command('projects-list', 'List all projects', (yargs) => {
@@ -68,7 +88,6 @@ yargs
       await command.run();
     } catch (err) {
       console.error(err);
-      process.exit();
     }
   })
   .command('projects-select', 'Select a project', (yargs) => {
@@ -78,58 +97,52 @@ yargs
       let pid = await command.run();
     } catch (err) {
       console.error(err);
-      process.exit();
     }
   })
-  .command('leads-list [-P <pid>]', 'List all leads for the current project, or a given project', (yargs) => {
+  .command('leads-list [-P <projectId>] [-o <outfile>] [-f <format>]',
+    'List all leads for the selected project, or a given project', (yargs) => {
+    yargs.options('P', {
+      alias: 'project',
+      demandOption: false,
+      type: 'string'
+    }).options('o', {
+      alias: 'output',
+      demandOption: false,
+      type: 'string'
+    }).options('format', {
+      demandOption: false,
+      default: 'json',
+      type: 'string'
+    }).choices('format', [
+      'json', 'csv'
+    ]);
+  }, async (argv) => {
+    try {
+      const command = commands.queryLeadsCommand(config);
+      await command.run({
+        projectId: argv.P,
+        format: argv.format,
+        output: argv.o
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  })
+  .command('leads-last [-P <projectId>]',
+    'Show the last lead added', (yargs) => {
     yargs
     .options('P', {
       alias: 'project',
       demandOption: false,
       type: 'string'
     })
-    .options('o', {
-      alias: 'output',
-      demandOption: false,
-      type: 'string'
-    })
     .options('format', {
       demandOption: false,
       default: 'json',
       type: 'string'
     })
     .choices('format', [
-      'json', 'yaml', 'csv'
-    ])
-  }, function(argv) {
-    let apiKey = readApiKey();
-    bailIfNoApiKey(apiKey);
-    let service = new Service(apiKey);
-    new capturooCommands.LeadsCommand(service)
-      .run({
-        projectId: argv.p,
-        format: argv.format,
-        output: argv.o
-      })
-      .then(() => {
-      })
-      .catch(err => {
-      });
-  })
-  .command('leads-last [-p <projectId>]', '', (yargs) => {
-    yargs
-    .options('p', {
-      alias: 'project',
-      demandOption: false,
-      type: 'string'
-    })
-    .options('format', {
-      demandOption: false,
-      default: 'json',
-      type: 'string'
-    })
-    .choices('format', [
-      'json', 'yaml', 'csv'
+      'json'
     ]);
   }, async (argv) => {
     try {
@@ -137,7 +150,6 @@ yargs
       await command.run();
     } catch (err) {
       console.error(err);
-      process.exit();
     }
   })
   .help()
