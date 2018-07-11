@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.8.0 (Wed, 11 July 2018)
++ Removes src/commands/project-command.js
++ ESLint
+
 ## 0.7.0 (19 June 2018)
 + Leads query export CSV and JSON formats stdout and file
 + Bunyan logging to .capturoo directory
