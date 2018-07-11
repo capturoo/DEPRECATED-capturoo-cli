@@ -25,28 +25,32 @@ class QueryLeadsCommand extends Command {
   }
 
   async run(options = {}) {
+    let projectId;
+    let outFile;
+    let outString;
+
     if (!this.activeProject) {
       let cmd = `${chalk.cyan.bold('capturoo projects-select')}`;
-      console.warn(`You have no active project. Use ${cmd} to select one.`)
+      console.warn(`You have no active project. Use ${cmd} to select one.`);
       return undefined;
     }
 
     if (options.hasOwnProperty('projectId') && options.projectId) {
-      var projectId = options.projectId;
+      projectId = options.projectId;
       this.log.debug(`options.projectId is set, using projectId=${projectId}`);
     } else {
-      var projectId = this.activeProject;
+      projectId = this.activeProject;
       this.log.debug(
         `options.projectId is **not** set, default projectId=${projectId}`
       );
     }
 
     if (options.hasOwnProperty('output') && options.output) {
-      var outFile = options.output;
+      outFile = options.output;
       this.log.debug(`options.output is set. outFile=${outFile}`);
     } else {
-      this.log.debug(`options.output is **not** set. outFile=undefined`);
-      var outFile = undefined;
+      this.log.debug('options.output is **not** set. outFile=undefined');
+      outFile = undefined;
     }
 
     try {
@@ -63,7 +67,7 @@ class QueryLeadsCommand extends Command {
       this.spinner.stop();
 
       if (querySnapshot.size === 0) {
-        console.log(`This project currently has no leads`);
+        console.log('This project currently has no leads');
         return;
       }
 
@@ -91,9 +95,9 @@ class QueryLeadsCommand extends Command {
         // ];
         const parser = new Json2csvParser(opts);
 
-        var outString = parser.parse(records);
+        outString = parser.parse(records);
       } else {
-        var outString = JSON.stringify(records, null, 2);
+        outString = JSON.stringify(records, null, 2);
       }
 
       if (outFile) {

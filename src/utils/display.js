@@ -3,13 +3,13 @@ const chalk = require('chalk');
 const emoji = require('node-emoji');
 
 const chalkHeader = chalk.white.underline;
-const chalkNormal = chalk.white
+const chalkNormal = chalk.white;
 const chalkActive = chalk.green;
 const chalkHighlight = chalk.green;
-const chalkError = chalk.bold.red;
 
 class Display {
   static row(columnHeaders) {
+    let draw;
     let output = '';
     for (const c of columnHeaders) {
       if (c.padStart) {
@@ -22,9 +22,9 @@ class Display {
 
       let padSize = c.size - c.data.length;
       if (c.chalk) {
-        var draw = c.chalk;
+        draw = c.chalk;
       } else {
-        var draw = (chalk) => (chalk)
+        draw = (chalk) => (chalk);
       }
       let data = draw(c.data) + ' '.repeat(padSize + 2);
 
@@ -40,6 +40,9 @@ class Display {
    * @returns {String} console-ready text string
    */
   static displayProjectArray(aid, projects, activePid) {
+    let padStart;
+    let draw;
+
     if (projects.length === 0) {
       return 'There are currently no projects associated to this account.';
     }
@@ -75,11 +78,11 @@ class Display {
 
     for (const p of projects) {
       if (p.pid === activePid) {
-        var padStart = chalkActive('🐿  ');
-        var draw = chalkActive;
+        padStart = chalkActive('🐿  ');
+        draw = chalkActive;
       } else {
-        var padStart = 3;
-        var draw = chalkNormal;
+        padStart = 3;
+        draw = chalkNormal;
       }
       output += '\n' + this.row([
         { data: p.pid, padStart, size: maxLength.pid, chalk: draw },
@@ -110,8 +113,9 @@ class Display {
   }
 
   static noKey() {
-    let output = chalk.white(`${emoji.get('warning')}  Run: ${chalk.cyan.bold('capturoo setup')}`);
-    output += ` to setup this command line tool`;
+    let output = chalk.white(
+      `${emoji.get('warning')}  Run: ${chalk.cyan.bold('capturoo setup')} to setup this command line tool`
+    );
     return output;
   }
 }

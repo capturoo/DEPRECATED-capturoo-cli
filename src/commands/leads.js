@@ -1,6 +1,5 @@
 'use strict';
 const { stringToFile, leadsToYamlString } = require('../utils/leads-processing');
-const Json2csvParser = require('json2csv').Parser;
 
 function LeadsCommand(service) {
   Object.assign(this, {
@@ -9,13 +8,14 @@ function LeadsCommand(service) {
 }
 
 LeadsCommand.prototype.run = function(options) {
+  let format;
   let service = this.service;
 
   var opts = options || {};
   if (opts.hasOwnProperty('projectId') && opts.projectId) {
     var projectId = opts.projectId;
   } else {
-    var projectId = readCurrentProjectSync();
+    // var projectId = readCurrentProjectSync();
   }
 
   if (opts.hasOwnProperty('output') && opts.output) {
@@ -23,9 +23,9 @@ LeadsCommand.prototype.run = function(options) {
   }
 
   if (opts.hasOwnProperty('format') && opts.format) {
-    var format = opts.format;
+    format = opts.format;
   } else {
-    var format = 'json';
+    format = 'json';
   }
 
   return new Promise(function(resolve, reject) {
