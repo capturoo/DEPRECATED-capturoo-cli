@@ -3,13 +3,15 @@
   "version": "0.7.0",
   "description": "Capturoo command-line tool for developers",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint ./src"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/capturoo/capturoo-cli.git"
   },
   "bin": {
+    "aroo": "index.js",
     "capturoo": "index.js"
   },
   "author": "Capturoo <support@capturoo.com> (https://www.capturoo.com/)",
@@ -27,5 +29,8 @@
     "ora": "^2.1.0",
     "prettyjson": "^1.2.1",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.1.0"
   }
 }

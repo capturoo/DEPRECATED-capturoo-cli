@@ -61,9 +61,9 @@ class AddProjectCommand extends Command {
       }
 
       let data = projectDocSnap.data();
-      this.spinner.succeed(`${emoji.get('chipmunk')}  ${data.projectName} ` +
-      `(${data.pid}) successfully added. Use ${chalk.cyan.bold('capturoo project-select')}` +
-      ` to switch to this project.`);
+      this.spinner.succeed(
+        `${emoji.get('chipmunk')}  ${data.projectName} (${data.pid}) successfully added. Use ${chalk.cyan.bold('capturoo project-select')} to switch to this project.`
+      );
       return projectDocSnap.data();
     } catch (err) {
       throw err;

@@ -63,7 +63,7 @@ class SelectProjectCommand extends Command {
       // find the pid in the original choices list to get both the pid
       // and projectName together
       var selected = choices.find(function(data) {
-        return data.value === answer.pid
+        return data.value === answer.pid;
       });
 
       this.configManager.writeCurrentProjectSync(answer.pid);
