@@ -30,8 +30,7 @@ class LastLeadCommand extends Command {
         return undefined;
       }
 
-      let proj = `${chalk.white.bold(`${chalk.white.bold(this.activeProject)}`)}`;
-      this.spinner.start(`${emoji.get('chipmunk')}  Getting last lead for ${proj}.`);
+      this.spinner.start(`${emoji.get('chipmunk')}  Getting last lead for ${this.activeProject}.`);
       let projectDocRef = this.store
         .accounts().doc(this.aid)
         .projects().doc(this.activeProject);
