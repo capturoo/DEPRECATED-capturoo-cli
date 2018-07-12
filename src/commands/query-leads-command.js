@@ -37,20 +37,12 @@ class QueryLeadsCommand extends Command {
 
     if (options.hasOwnProperty('projectId') && options.projectId) {
       projectId = options.projectId;
-      this.log.debug(`options.projectId is set, using projectId=${projectId}`);
     } else {
       projectId = this.activeProject;
-      this.log.debug(
-        `options.projectId is **not** set, default projectId=${projectId}`
-      );
     }
 
     if (options.hasOwnProperty('output') && options.output) {
       outFile = options.output;
-      this.log.debug(`options.output is set. outFile=${outFile}`);
-    } else {
-      this.log.debug('options.output is **not** set. outFile=undefined');
-      outFile = undefined;
     }
 
     try {
@@ -101,9 +93,6 @@ class QueryLeadsCommand extends Command {
       }
 
       if (outFile) {
-        this.log.debug(
-          `Using fullpath of ${path.resolve(process.cwd(), outFile)}`
-        );
         fs.writeFileSync(path.resolve(process.cwd(), outFile), outString);
       } else {
         console.log(outString);

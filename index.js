@@ -2,23 +2,12 @@
 const yargs = require('yargs');
 const Display = require('./src/utils/display');
 const commands = require('./src/commands');
-const bunyan = require('bunyan');
 const path = require('path');
 const ConfigManager = require('./src/utils/config-manager');
 const configManager = new ConfigManager();
 
 // configure logging and put onboard the config for global use
 const capturooDir = configManager.ensureCapturooDirExistsSync();
-const log = bunyan.createLogger({
-  name: 'myapp',
-  //serializers: bunyan.stdSerializers,
-  streams: [
-    {
-      level: 'debug',
-      path: path.resolve(capturooDir, 'capturoo-cli.log')
-    }
-  ]
-});
 
 if (process.env.CAPTUROO_CLI_DEBUG_MODE) {
   let homeDir = process.env[(process.platform == 'win32')
@@ -27,13 +16,10 @@ if (process.env.CAPTUROO_CLI_DEBUG_MODE) {
 
   console.log(Display.stagingMode());
   var config = require(stagingConfigFile);
-  log.debug('Running in staging mode');
+  console.debug('Running in staging mode');
 } else {
   var config = require('./config');
 }
-config.log = log;
-
-log.info('Capturoo CLI tool started');
 
 function bailIfNoApiKey(apiKey) {
   if (!apiKey) {
@@ -48,7 +34,6 @@ yargs
   .command('account', 'Show account details', (yargs) => {
   }, async function(argv) {
     try {
-      log.info('AccountCommand started');
       const command = commands.accountCommand(config);
       let account = await command.run();
     } catch (err) {

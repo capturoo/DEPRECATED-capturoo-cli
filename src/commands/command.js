@@ -43,7 +43,6 @@ class Command {
       ...fileConfig,
       activeProject,
       spinner,
-      log: config.log,
       store: capturoo.store()
     });
     capturoo.store().setPrivateApiKey(fileConfig.privateApiKey);

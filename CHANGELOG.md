@@ -1,4 +1,7 @@
 # CHANGELOG
+## 0.9.0 (Thu, 12 July 2018)
++ Remove buyan as it requires node-gyp which in turn requires python
+
 ## 0.8.0 (Wed, 11 July 2018)
 + Removes src/commands/project-command.js
 + ESLint
