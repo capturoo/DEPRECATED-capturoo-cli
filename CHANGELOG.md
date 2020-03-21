@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.9.2 (Sat, 21 March 2020)
++ npm audit fix
++ Update npm deps
+
 ## 0.9.1 (Thu, 12 July 2018)
 + Fix last-leads chalk issue turning the terminal window grey after existing
 
